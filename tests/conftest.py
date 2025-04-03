@@ -15,11 +15,6 @@ def driver():
     yield driver
     driver.quit()
 
-@pytest.fixture
-def wait(driver):
-    """Фикстура для явных ожиданий"""
-    return WebDriverWait(driver, 15)
-
 
 @pytest.fixture
 def registration(driver):

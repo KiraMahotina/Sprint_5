@@ -1,131 +1,129 @@
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 import locators
 
 
-def test_login_from_main_button(driver, wait, registration):
-    """Вход через кнопку 'Войти в аккаунт' на главной"""
-    driver.get("https://stellarburgers.nomoreparties.site")
+class TestLoginFunctionality:
+    def test_login_from_main_button(self, driver, registration):
+        """Вход через кнопку 'Войти в аккаунт' на главной"""
+        driver.get("https://stellarburgers.nomoreparties.site")
 
-    login_button = wait.until(
-        EC.element_to_be_clickable(locators.LoginPageLocators.MAIN_LOGIN_BUTTON)
-    )
-    login_button.click()
+        login_button = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable(locators.LoginPageLocators.MAIN_LOGIN_BUTTON)
+        )
+        login_button.click()
 
-    email_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
-    )
-    email_field.send_keys(registration["email"])
+        email_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
+        )
+        email_field.send_keys(registration["email"])
 
-    password_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
-    )
-    password_field.send_keys(registration["password"])
+        password_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
+        )
+        password_field.send_keys(registration["password"])
 
-    submit_button = wait.until(
-        EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
-    )
-    submit_button.click()
+        submit_button = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
+        )
+        submit_button.click()
 
-    wait.until(
-        EC.url_matches("https://stellarburgers.nomoreparties.site/")
-    )
+        WebDriverWait(driver, 15).until(
+            EC.url_matches("https://stellarburgers.nomoreparties.site/")
+        )
 
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, "//button[contains(text(), 'Оформить заказ')]"))
-    )
+        order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.MainPage.MAKE_ORDER_BUTTON))
+        assert order_button.is_displayed()
 
+    def test_login_from_personal_account(self, driver, registration):
+        """Вход через кнопку 'Личный кабинет"""
+        driver.get("https://stellarburgers.nomoreparties.site")
 
-def test_login_from_personal_account(driver, wait, registration):
-    """Вход через кнопку 'Личный кабинет"""
-    driver.get("https://stellarburgers.nomoreparties.site")
+        account_link = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable(locators.LoginPageLocators.ACCOUNT_LINK)
+        )
+        account_link.click()
 
-    account_link = wait.until(
-        EC.element_to_be_clickable(locators.LoginPageLocators.ACCOUNT_LINK)
-    )
-    account_link.click()
+        email_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
+        )
+        email_field.send_keys(registration["email"])
 
-    email_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
-    )
-    email_field.send_keys(registration["email"])
+        password_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
+        )
+        password_field.send_keys(registration["password"])
 
-    password_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
-    )
-    password_field.send_keys(registration["password"])
+        submit_button = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
+        )
+        submit_button.click()
 
-    submit_button = wait.until(
-        EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
-    )
-    submit_button.click()
+        WebDriverWait(driver, 15).until(
+            EC.url_matches("https://stellarburgers.nomoreparties.site/")
+        )
 
-    wait.until(
-        EC.url_matches("https://stellarburgers.nomoreparties.site/")
-    )
+        order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.MainPage.MAKE_ORDER_BUTTON))
+        assert order_button.is_displayed()
 
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, "//button[contains(text(), 'Оформить заказ')]"))
-    )
+    def test_login_from_registration_page(self, driver, registration):
+        """Вход со страницы регистрации"""
+        driver.get("https://stellarburgers.nomoreparties.site/register")
 
+        account_link = WebDriverWait(driver, 15).until(EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON))
+        account_link.click()
 
-def test_login_from_registration_page(driver, wait, registration):
-    """Вход со страницы регистрации"""
-    driver.get("https://stellarburgers.nomoreparties.site/register")
+        email_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
+        )
+        email_field.send_keys(registration["email"])
 
-    account_link = wait.until(EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON))
-    account_link.click()
+        password_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
+        )
+        password_field.send_keys(registration["password"])
 
-    email_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
-    )
-    email_field.send_keys(registration["email"])
+        submit_button = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
+        )
+        submit_button.click()
 
-    password_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
-    )
-    password_field.send_keys(registration["password"])
+        WebDriverWait(driver, 15).until(
+            EC.url_matches("https://stellarburgers.nomoreparties.site/")
+        )
 
-    submit_button = wait.until(
-        EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
-    )
-    submit_button.click()
+        order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.MainPage.MAKE_ORDER_BUTTON))
+        assert order_button.is_displayed()
 
-    wait.until(
-        EC.url_matches("https://stellarburgers.nomoreparties.site/")
-    )
+    def test_login_from_password_recovery(self, driver, registration):
+        """Вход со страницы восстановления пароля"""
+        driver.get("https://stellarburgers.nomoreparties.site/forgot-password")
 
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, "//button[contains(text(), 'Оформить заказ')]"))
-    )
+        account_link = WebDriverWait(driver, 15).until(EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_LINK))
+        account_link.click()
 
+        email_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
+        )
+        email_field.send_keys(registration["email"])
 
-def test_login_from_password_recovery(driver, wait, registration):
-    """Вход со страницы восстановления пароля"""
-    driver.get("https://stellarburgers.nomoreparties.site/forgot-password")
+        password_field = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
+        )
+        password_field.send_keys(registration["password"])
 
-    account_link = wait.until(EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_LINK))
-    account_link.click()
+        submit_button = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
+        )
+        submit_button.click()
 
-    email_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.EMAIL_INPUT)
-    )
-    email_field.send_keys(registration["email"])
+        WebDriverWait(driver, 15).until(
+            EC.url_matches("https://stellarburgers.nomoreparties.site/")
+        )
 
-    password_field = wait.until(
-        EC.visibility_of_element_located(locators.LoginPageLocators.PASSWORD_INPUT)
-    )
-    password_field.send_keys(registration["password"])
-
-    submit_button = wait.until(
-        EC.element_to_be_clickable(locators.LoginPageLocators.LOGIN_BUTTON)
-    )
-    submit_button.click()
-
-    wait.until(
-        EC.url_matches("https://stellarburgers.nomoreparties.site/")
-    )
-
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, "//button[contains(text(), 'Оформить заказ')]"))
-    )
+        order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(locators.MainPage.MAKE_ORDER_BUTTON))
+        assert order_button.is_displayed()

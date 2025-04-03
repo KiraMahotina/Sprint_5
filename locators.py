@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 
+class MainPage:
+    MAKE_ORDER_BUTTON = (By.XPATH, "//button[contains(text(), 'Оформить заказ')]")
 
 class RegistrationLocators:
     NAME_FIELD = (By.XPATH, "//label[contains(@class, 'input__placeholder') and contains(text(), 'Имя')]/following::input[1]") # Поле "Имя"
@@ -25,17 +27,22 @@ class AccountPageLocators:
 
 class ConstructorLocators:
     CONSTRUCTOR_LINK = (By.XPATH, "//p[text()='Конструктор']/..")
-    LOGO_LINK = (By.XPATH, "/html/body/div[1]/div/header/nav/div/a")
+    LOGO_LINK = (By.XPATH, "//a[@class='active']")
     ORDER_BUTTON = (By.XPATH, "//button[contains(text(), 'Оформить заказ')]")
+    BURGER_TEXT = (By.XPATH, "//*[contains(text(), 'Соберите бургер')]")
 
     # Tabs
+    #buns_tab = (By.XPATH, "//div[contains(@class, 'tab_tab')]//span[text()='Булки']")
     BUNS_TAB = (By.XPATH, "//span[text()='Булки']/parent::div")
     SAUCES_TAB = (By.XPATH, "//span[text()='Соусы']/parent::div")
     TOPPINGS_TAB = (By.XPATH, "//span[text()='Начинки']/parent::div")
 
+
     # Sections
     BUNS_SECTION = (By.XPATH, "//h2[text()='Булки']")
+    BUNS_ACTIV = (By.XPATH, "//div[contains(@class, 'tab_tab_type_current')]//span[text()='Булки']")
     SAUCES_SECTION = (By.XPATH, "//h2[text()='Соусы']")
+    SAUCES_ACTIV = (By.XPATH, "//div[contains(@class, 'tab_tab_type_current')]//span[contains(text(), 'Соусы')]")
     TOPPINGS_SECTION = (By.XPATH, "//h2[text()='Начинки']")
 
     # Items
